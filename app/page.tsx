@@ -464,14 +464,14 @@ export default function Home() {
             animate={{ opacity: 1, scale: 1, rotate: 0 }}
             transition={{ type: "spring", stiffness: 200, damping: 20, delay: 0.1 }}
           >
-            <div className="relative h-32 w-32 sm:h-40 sm:w-40 overflow-hidden rounded-full border-4 border-[#0ea5e9]/50 shadow-[0_0_30px_rgba(14,165,233,0.3)]">
+            <div className="relative h-40 w-40 sm:h-52 sm:w-52 overflow-hidden rounded-full border-4 border-[#0ea5e9]/50 shadow-[0_0_30px_rgba(14,165,233,0.3)]">
               {/* Use uploaded profile image with fallback avatar on load error */}
               <Image
                 src={profilePhoto}
                 alt="Ashwani Kumar"
-                width={160}
-                height={160}
-                className="h-full w-full object-cover"
+                width={208}
+                height={208}
+                className="h-full w-full object-cover object-top"
                 priority
               />
             </div>
