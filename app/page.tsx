@@ -463,9 +463,9 @@ export default function Home() {
             transition={{ type: "spring", stiffness: 200, damping: 20, delay: 0.1 }}
           >
             <div className="relative h-32 w-32 sm:h-40 sm:w-40 overflow-hidden rounded-full border-4 border-[#0ea5e9]/50 shadow-[0_0_30px_rgba(14,165,233,0.3)]">
-              {/* Fallback avatar if no image - replace /me.png when putting photo in public */}
+              {/* Use uploaded profile image with fallback avatar on load error */}
               <img
-                src="/me.png"
+                src="/pfp.jpeg"
                 alt="Ashwani Kumar"
                 className="h-full w-full object-cover"
                 onError={(e) => {
