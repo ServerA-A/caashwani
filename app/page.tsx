@@ -116,7 +116,7 @@ function Navbar() {
             className="ml-2 flex items-center gap-2 rounded-full bg-[#0ea5e9] px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-[#a855f7]"
           >
             <Download className="h-4 w-4" />
-            View CV
+            Open CV
           </a>
         </div>
 
@@ -163,7 +163,7 @@ function Navbar() {
             className="mt-2 flex w-full items-center justify-center gap-2 rounded-full bg-[#0ea5e9] px-4 py-2.5 text-sm font-medium text-white"
           >
             <Download className="h-4 w-4" />
-            View CV
+            Open CV
           </a>
         </motion.div>
       )}
@@ -514,7 +514,7 @@ export default function Home() {
               className="flex w-full items-center justify-center gap-2 rounded-full bg-[#0ea5e9] px-6 py-3 text-sm font-semibold text-white transition-all hover:bg-[#a855f7] hover:shadow-lg hover:shadow-[#0ea5e9]/20 sm:w-auto"
             >
               <Download className="h-4 w-4" />
-              View CV
+              Open CV
             </a>
             <div className="flex w-full gap-3 sm:w-auto">
               <a
