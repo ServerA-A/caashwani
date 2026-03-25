@@ -230,7 +230,7 @@ export default function Home() {
       title: "Thumbnaily.in",
       tech: ["Next.js", "NextAuth", "Prisma", "PostgreSQL", "Tailwind CSS"],
       date: "May – Sep 2025",
-      link: "https://github.com/ashuksmile",
+      link: "https://github.com/ashuksmile/thumbnaily",
       points: [
         "Contributed and launched Thumbnaily, a full-stack application for AI-powered thumbnail generation using Next.js.",
         "Integrated OpenAI to generate professional-quality thumbnails based on user prompt and visual preferences.",
@@ -616,7 +616,7 @@ export default function Home() {
           {projects.map((p, i) => (
             <motion.div
               key={p.title}
-              className="group rounded-2xl border border-[#1e293b] bg-[#0f172a]/80 backdrop-blur-sm p-6 transition-all hover:border-[#0ea5e9]/50 hover:shadow-xl hover:shadow-[#0ea5e9]/10 md:p-8 cursor-pointer relative overflow-hidden"
+              className={`group rounded-2xl border border-[#1e293b] bg-[#0f172a]/80 backdrop-blur-sm p-6 transition-all hover:border-[#0ea5e9]/50 hover:shadow-xl hover:shadow-[#0ea5e9]/10 md:p-8 relative overflow-hidden ${p.link ? "cursor-pointer" : "cursor-default"}`}
               variants={fadeUp}
               initial="hidden"
               whileInView="visible"
@@ -630,19 +630,32 @@ export default function Home() {
               transition={{ type: "spring", stiffness: 300, damping: 20 }}
               viewport={{ once: true }}
               custom={i}
+              onClick={() => {
+                if (p.link) {
+                  window.open(p.link, "_blank", "noopener,noreferrer");
+                }
+              }}
+              onKeyDown={(e) => {
+                if (!p.link) return;
+                if (e.key === "Enter" || e.key === " ") {
+                  e.preventDefault();
+                  window.open(p.link, "_blank", "noopener,noreferrer");
+                }
+              }}
+              role={p.link ? "link" : undefined}
+              tabIndex={p.link ? 0 : -1}
+              aria-label={p.link ? `Open ${p.title} on GitHub` : undefined}
             >
               <div className="mb-4 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
                 <div className="flex items-center gap-3">
-                  <h3 className="text-lg font-bold md:text-xl">{p.title}</h3>
+                  <h3 className={`text-lg font-bold md:text-xl transition-colors ${p.link ? "text-[#e5e7eb] group-hover:text-[#0ea5e9]" : ""}`}>{p.title}</h3>
                   {p.link && (
-                    <a
-                      href={p.link}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-[#0ea5e9] transition-colors hover:text-[#a855f7]"
+                    <span
+                      title={`Open ${p.title} on GitHub`}
+                      className="text-[#0ea5e9] transition-colors group-hover:text-[#a855f7]"
                     >
                       <ExternalLink className="h-4 w-4" />
-                    </a>
+                    </span>
                   )}
                 </div>
                 <span className="text-xs font-medium text-[#888]">
