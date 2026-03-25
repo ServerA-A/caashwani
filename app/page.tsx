@@ -1,6 +1,7 @@
 "use client";
 
 import { motion, useScroll, useTransform } from "framer-motion";
+import Image from "next/image";
 import {
   Github,
   Linkedin,
@@ -18,6 +19,7 @@ import {
   Star
 } from "lucide-react";
 import { useState, useRef } from "react";
+import profilePhoto from "../public/pfp.jpeg";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
@@ -464,13 +466,13 @@ export default function Home() {
           >
             <div className="relative h-32 w-32 sm:h-40 sm:w-40 overflow-hidden rounded-full border-4 border-[#0ea5e9]/50 shadow-[0_0_30px_rgba(14,165,233,0.3)]">
               {/* Use uploaded profile image with fallback avatar on load error */}
-              <img
-                src="/pfp.jpeg"
+              <Image
+                src={profilePhoto}
                 alt="Ashwani Kumar"
+                width={160}
+                height={160}
                 className="h-full w-full object-cover"
-                onError={(e) => {
-                  (e.target as HTMLImageElement).src = `https://ui-avatars.com/api/?name=Ashwani+Kumar&background=0f172a&color=0ea5e9&size=200`;
-                }}
+                priority
               />
             </div>
           </motion.div>
