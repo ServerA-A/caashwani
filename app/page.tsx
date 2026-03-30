@@ -5,6 +5,7 @@ import Image from "next/image";
 import {
   Github,
   Linkedin,
+  Download,
   Code2,
   Briefcase,
   GraduationCap,
@@ -17,38 +18,46 @@ import {
   Mail,
   Star
 } from "lucide-react";
-import { useState, useRef } from "react";
+import { useEffect, useState, useRef } from "react";
 import profilePhoto from "../public/pfp.jpeg";
 
+const heroHeadlineWords = [
+  "Ashwani Kumar",
+  "a Systems Builder",
+  "an Automation-First Developer",
+];
+
 const fadeUp = {
-  hidden: { opacity: 0, y: 30 },
+  hidden: { opacity: 0, y: 22 },
   visible: (i: number) => ({
     opacity: 1,
     y: 0,
-    transition: { delay: i * 0.1, duration: 0.5, ease: "easeOut" as const },
+    transition: { delay: i * 0.08, duration: 0.55, ease: "easeOut" as const },
   }),
 };
 
 const stagger = {
-  visible: { transition: { staggerChildren: 0.08 } },
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.1, delayChildren: 0.08 } },
 };
 
 const scaleIn = {
-  hidden: { opacity: 0, scale: 0.8 },
+  hidden: { opacity: 0, y: 18 },
   visible: {
     opacity: 1,
-    scale: 1,
-    transition: { duration: 0.4, ease: "easeOut" as const },
+    y: 0,
+    transition: { duration: 0.45, ease: "easeOut" as const },
   },
 };
 
-function Tag({ children }: { children: React.ReactNode }) {
-  return (
-    <span className="inline-block rounded-full bg-[#1e293b] px-3 py-1 text-xs font-medium text-[#7dd3fc] transition-colors hover:bg-[#334155]">
-      {children}
-    </span>
-  );
-}
+const sectionReveal = {
+  hidden: { opacity: 0, y: 24 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.6, ease: "easeOut" as const },
+  },
+};
 
 function SectionHeading({
   icon: Icon,
@@ -174,70 +183,122 @@ function Navbar() {
 export default function Home() {
   const containerRef = useRef(null);
   const { scrollYProgress } = useScroll({ target: containerRef });
+  const [typedHeadline, setTypedHeadline] = useState("");
+  const [headlineWordIndex, setHeadlineWordIndex] = useState(0);
+  const [headlineCharIndex, setHeadlineCharIndex] = useState(0);
+  const [isDeletingHeadline, setIsDeletingHeadline] = useState(false);
+
+  useEffect(() => {
+    const currentWord = heroHeadlineWords[headlineWordIndex];
+    const atWordEnd = headlineCharIndex === currentWord.length;
+    const atWordStart = headlineCharIndex === 0;
+
+    const delay = isDeletingHeadline
+      ? 45
+      : atWordEnd
+        ? 1200
+        : 80;
+
+    const timeout = setTimeout(() => {
+      if (!isDeletingHeadline && atWordEnd) {
+        setIsDeletingHeadline(true);
+        return;
+      }
+
+      if (isDeletingHeadline && atWordStart) {
+        setIsDeletingHeadline(false);
+        setHeadlineWordIndex((prev) => (prev + 1) % heroHeadlineWords.length);
+        return;
+      }
+
+      const nextChar = isDeletingHeadline
+        ? headlineCharIndex - 1
+        : headlineCharIndex + 1;
+
+      setHeadlineCharIndex(nextChar);
+      setTypedHeadline(currentWord.slice(0, nextChar));
+    }, delay);
+
+    return () => clearTimeout(timeout);
+  }, [headlineWordIndex, headlineCharIndex, isDeletingHeadline]);
   
   // Parallax scrolling values for planets and backgrounds
   const y1 = useTransform(scrollYProgress, [0, 1], [0, 500]);
   const y2 = useTransform(scrollYProgress, [0, 1], [0, -300]);
   const y3 = useTransform(scrollYProgress, [0, 1], [0, 800]);
 
-  const skills = {
-    Languages: ["C/C++", "Java", "Python", "HTML/CSS", "JavaScript", "MySQL"],
-    "Tools / Platforms": [
-      "Ubuntu",
-      "GitHub",
-      "Git",
-      "Docker",
-      "Jupyter Notebook",
-    ],
-    Frameworks: [
-      "NumPy",
-      "Pandas",
-      "Scikit-learn",
-      "PyTorch",
-      "TensorFlow",
-    ],
-    "Soft Skills": [
-      "Problem-Solving",
-      "Team Player",
-      "Project Management",
-      "Adaptability",
-    ],
-  };
+  const arsenalTrackOne = [
+    "Python",
+    "C/C++",
+    "Java",
+    "JavaScript",
+    "TypeScript",
+    "React",
+    "Next.js",
+    "Node.js",
+    "Express",
+    "SQL",
+    "MySQL",
+    "PostgreSQL",
+  ];
+
+  const arsenalTrackTwo = [
+    "Git",
+    "GitHub",
+    "Docker",
+    "Linux",
+    "Jupyter",
+    "Pandas",
+    "NumPy",
+    "Scikit-learn",
+    "TensorFlow",
+    "PyTorch",
+    "Prisma",
+    "Tailwind CSS",
+  ];
 
   const projects = [
     {
       title: "ML Sentiment Analysis Model",
       tech: ["Python", "NumPy", "Pandas", "Scikit-learn"],
       date: "Nov 2025",
-      points: [
-        "Constructed a sentiment classifier using Logistic Regression and TF-IDF vectorization.",
-        "Refined and processed textual datasets to improve model accuracy and generalization.",
-        "Evaluated performance using precision, recall, F1-score, and confusion matrix.",
-        "Tuned hyperparameters and refined the ML pipeline to improve consistency and reduce overfitting.",
-      ],
+      preview: "/project-ml.svg",
+      github: "https://github.com/ashuksmile",
+      demo: "",
+      problem:
+        "Teams needed fast sentiment insights from large text datasets, but manual analysis was slow and inconsistent.",
+      solution:
+        "Built an end-to-end NLP pipeline using TF-IDF + Logistic Regression with clean preprocessing, validation, and tuned hyperparameters.",
+      impact:
+        "Delivered reliable sentiment classification with measurable precision/recall improvements and a repeatable workflow for future datasets.",
     },
     {
       title: "BankSys - Banking Management System",
       tech: ["C++", "File Handling", "Data Structures"],
       date: "Jun – Jul 2025",
-      points: [
-        "Developed a console-based banking management system with structured data handling for account creation, balance operations, and secure transaction processing.",
-        "Formed a structured data model with file-based persistence, reliable storage, and quick record access.",
-        "Implemented optimized modules for deposits, withdrawals, account search, and transaction history.",
-        "Refactored program architecture into modular components, improving performance and maintainability.",
-      ],
+      preview: "/project-banksys.svg",
+      github: "https://github.com/ashuksmile",
+      demo: "",
+      problem:
+        "Basic banking workflows were fragmented and error-prone in command-line training projects.",
+      solution:
+        "Engineered a modular C++ banking system with account lifecycle operations, file persistence, and structured transaction history.",
+      impact:
+        "Improved reliability and maintainability of core operations while creating a scalable base for additional banking features.",
     },
     {
       title: "Thumbnaily.in",
       tech: ["Next.js", "NextAuth", "Prisma", "PostgreSQL", "Tailwind CSS"],
       date: "May – Sep 2025",
-      link: "https://github.com/ashuksmile/thumbnaily",
-      points: [
-        "Contributed and launched Thumbnaily, a full-stack application for AI-powered thumbnail generation using Next.js.",
-        "Integrated OpenAI to generate professional-quality thumbnails based on user prompt and visual preferences.",
-        "Crafted efficient data models with Prisma and PostgreSQL, enabling smooth user workflows and secure auth.",
-        "Deployed on a virtual machine with a complete CI/CD pipeline for reliable builds, updates, and scalability.",
-      ],
+      preview: "/project-thumbnaily.svg",
+      github: "https://github.com/ashuksmile/thumbnaily",
+      demo: "https://thumbnaily.in",
+      problem:
+        "Creators needed high-quality thumbnails quickly, but design iteration was time-consuming and skill-heavy.",
+      solution:
+        "Developed a full-stack AI thumbnail platform with secure auth, prompt-driven generation, and structured asset workflows.",
+      impact:
+        "Cut thumbnail production time and enabled users to generate polished visual concepts faster with a production-ready architecture.",
     },
   ];
 
@@ -295,58 +356,58 @@ export default function Home() {
   ];
 
   return (
-    <div ref={containerRef} className="relative min-h-screen bg-[#020617] overflow-x-hidden text-neutral-200">
+    <div ref={containerRef} className="relative min-h-screen bg-[#01040d] overflow-x-hidden text-neutral-200">
       {/* ── FLOATING BACKGROUND ── */}
       <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden">
         {/* Dynamic Star background layer */}
-        <motion.div style={{ y: y1 }} className="absolute inset-0 z-0 opacity-40">
-          {[...Array(40)].map((_, i) => (
+        <motion.div style={{ y: y1 }} className="absolute inset-0 z-0 opacity-18">
+          {[...Array(24)].map((_, i) => (
             <div
               key={`star-${i}`}
               className="absolute rounded-full bg-white"
               style={{
                 top: `${Math.random() * 100}%`,
                 left: `${Math.random() * 100}%`,
-                width: `${Math.random() * 3 + 1}px`,
-                height: `${Math.random() * 3 + 1}px`,
-                opacity: Math.random(),
-                boxShadow: "0 0 10px rgba(255,255,255,0.8)",
+                width: `${Math.random() * 2 + 1}px`,
+                height: `${Math.random() * 2 + 1}px`,
+                opacity: Math.random() * 0.7,
+                boxShadow: "0 0 6px rgba(148,163,184,0.45)",
               }}
             />
           ))}
         </motion.div>
         
         {/* Deep space parallax layer */}
-        <motion.div style={{ y: y2 }} className="absolute inset-0 z-0 opacity-20">
-          {[...Array(20)].map((_, i) => (
+        <motion.div style={{ y: y2 }} className="absolute inset-0 z-0 opacity-8">
+          {[...Array(12)].map((_, i) => (
             <div
               key={`nebula-star-${i}`}
-              className="absolute rounded-full bg-[#0ea5e9]"
+              className="absolute rounded-full bg-[#38bdf8]"
               style={{
                 top: `${Math.random() * 100}%`,
                 left: `${Math.random() * 100}%`,
-                width: `${Math.random() * 4 + 2}px`,
-                height: `${Math.random() * 4 + 2}px`,
+                width: `${Math.random() * 3 + 1}px`,
+                height: `${Math.random() * 3 + 1}px`,
                 filter: "blur(2px)",
-                opacity: Math.random() * 0.5,
+                opacity: Math.random() * 0.35,
               }}
             />
           ))}
         </motion.div>
 
         {/* Constellations lines parallax layer */}
-        <motion.div style={{ y: y3 }} className="absolute inset-0 z-0 opacity-10">
+        <motion.div style={{ y: y3 }} className="absolute inset-0 z-0 opacity-5">
           <svg className="h-full w-full" xmlns="http://www.w3.org/2000/svg">
-            <line x1="10%" y1="20%" x2="25%" y2="40%" stroke="#a855f7" strokeWidth="1" />
-            <line x1="25%" y1="40%" x2="40%" y2="35%" stroke="#a855f7" strokeWidth="1" />
-            <line x1="60%" y1="70%" x2="80%" y2="60%" stroke="#0ea5e9" strokeWidth="1" />
-            <line x1="80%" y1="60%" x2="90%" y2="80%" stroke="#0ea5e9" strokeWidth="1" />
+            <line x1="10%" y1="20%" x2="25%" y2="40%" stroke="#334155" strokeWidth="1" />
+            <line x1="25%" y1="40%" x2="40%" y2="35%" stroke="#334155" strokeWidth="1" />
+            <line x1="60%" y1="70%" x2="80%" y2="60%" stroke="#334155" strokeWidth="1" />
+            <line x1="80%" y1="60%" x2="90%" y2="80%" stroke="#334155" strokeWidth="1" />
           </svg>
         </motion.div>
 
         {/* Nebula/Dust effects */}
         <motion.div
-          className="absolute -left-40 top-0 h-[400px] w-[400px] rounded-full bg-[#0ea5e9]/10 blur-[120px]"
+          className="absolute -left-40 top-0 h-[340px] w-[340px] rounded-full bg-[#0ea5e9]/6 blur-[130px]"
           animate={{
             x: [0, 100, 0],
             y: [0, 50, 0],
@@ -355,7 +416,7 @@ export default function Home() {
           transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }}
         />
         <motion.div
-          className="absolute -right-40 bottom-20 h-[500px] w-[500px] rounded-full bg-[#a855f7]/10 blur-[120px]"
+          className="absolute -right-40 bottom-20 h-[380px] w-[380px] rounded-full bg-[#1d4ed8]/5 blur-[130px]"
           animate={{
             x: [0, -100, 0],
             y: [0, -50, 0],
@@ -369,7 +430,7 @@ export default function Home() {
           }}
         />
 
-        <motion.div style={{ y: y1 }}>
+        <motion.div style={{ y: y1 }} className="opacity-20">
         {/* Planets */}
         {/* Planet 1 - Purple/Blue */}
         <motion.div
@@ -457,108 +518,98 @@ export default function Home() {
         <Navbar />
 
       {/* ── HERO ── */}
-      <section className="relative flex min-h-[100dvh] items-center justify-center overflow-hidden px-4 pt-16 pb-8 sm:pt-20">
-        <div className="relative z-10 mx-auto w-full max-w-4xl text-center">
+      <section className="relative flex min-h-[100dvh] items-center justify-center overflow-hidden px-4 pb-10 pt-24 sm:px-6 sm:pt-28 md:px-8">
+        <div className="pointer-events-none absolute inset-0 -z-10">
+          <div className="absolute left-1/2 top-1/2 h-[30rem] w-[30rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,_rgba(14,165,233,0.14)_0%,_rgba(2,6,23,0)_70%)] blur-2xl" />
+          <div className="absolute -top-24 right-0 h-72 w-72 rounded-full bg-cyan-300/5 blur-3xl" />
+          <div className="absolute -bottom-20 left-0 h-72 w-72 rounded-full bg-indigo-400/5 blur-3xl" />
+        </div>
+
+        <div className="relative z-10 mx-auto grid w-full max-w-6xl items-center gap-8 lg:grid-cols-[1.3fr_0.7fr] lg:gap-14">
           <motion.div
-            className="mb-8 flex justify-center"
-            initial={{ opacity: 0, scale: 0.5, rotate: -10 }}
-            animate={{ opacity: 1, scale: 1, rotate: 0 }}
-            transition={{ type: "spring", stiffness: 200, damping: 20, delay: 0.1 }}
+            className="text-center lg:text-left"
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, ease: "easeOut" }}
           >
-            <div className="relative h-48 w-48 sm:h-64 sm:w-64 overflow-hidden rounded-full border-4 border-[#0ea5e9]/50 shadow-[0_0_30px_rgba(14,165,233,0.3)]">
-              {/* Use uploaded profile image with fallback avatar on load error */}
-              <Image
-                src={profilePhoto}
-                alt="Ashwani Kumar"
-                width={256}
-                height={256}
-                className="h-full w-full object-cover object-top"
-                priority
-              />
-            </div>
+            <h1 className="max-w-4xl text-balance text-3xl font-semibold leading-[1.15] tracking-tight text-white sm:text-4xl md:text-5xl lg:text-6xl">
+              <span className="block">Hello...</span>
+              <span className="mt-1 block">I am <span className="text-cyan-200">{typedHeadline}</span>
+              <span className="ml-1 inline-block h-[0.95em] w-[2px] animate-pulse bg-cyan-300 align-[-0.1em]" /></span>
+            </h1>
+
+            <motion.p
+              className="mx-auto mt-5 max-w-2xl text-sm leading-relaxed text-slate-300 sm:text-base md:mx-0 md:text-lg"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.7, delay: 0.2 }}
+            >
+              I build practical software systems that connect data, automation, and user needs.
+              My focus is shipping scalable solutions that remove friction and solve real problems.
+            </motion.p>
+
+            <motion.div
+              className="mt-8 flex flex-col items-stretch gap-3 sm:flex-row sm:justify-center lg:justify-start"
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.25 }}
+            >
+              <a
+                href="#projects"
+                className="inline-flex h-12 items-center justify-center rounded-full bg-cyan-300 px-7 text-sm font-medium text-slate-950 transition-all hover:bg-cyan-200"
+              >
+                View Projects
+              </a>
+              <a
+                href="#contact"
+                className="inline-flex h-12 items-center justify-center rounded-full border border-slate-600 bg-slate-900/40 px-7 text-sm font-medium text-slate-100 transition-all hover:border-slate-400 hover:text-slate-50"
+              >
+                Contact Me
+              </a>
+            </motion.div>
           </motion.div>
 
-          <motion.h1
-            className="mb-3 text-3xl font-extrabold tracking-tight sm:text-4xl md:text-6xl lg:text-7xl"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2, duration: 0.6 }}
-          >
-            Ashwani{" "}
-            <span className="bg-gradient-to-r from-[#0ea5e9] to-[#a855f7] bg-clip-text text-transparent">
-              Kumar
-            </span>
-          </motion.h1>
-
-          <motion.p
-            className="mx-auto mb-6 max-w-2xl px-2 text-sm leading-relaxed text-[#888] sm:mb-8 sm:px-0 sm:text-base md:text-lg"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.35, duration: 0.6 }}
-          >
-            Computer Science Engineering student at LPU passionate about
-            Full-Stack Development, Machine Learning, and building impactful
-            software solutions.
-          </motion.p>
-
           <motion.div
-            className="flex flex-col items-center justify-center gap-3 sm:flex-row sm:gap-4"
-            initial={{ opacity: 0, y: 20 }}
+            className="mx-auto w-full max-w-[220px] sm:max-w-[260px] lg:max-w-[300px]"
+            initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.5, duration: 0.6 }}
+            transition={{ duration: 0.7, delay: 0.15 }}
           >
-            <a
-              href="/cv-latest.pdf?v=20260325"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex w-full items-center justify-center gap-2 rounded-full bg-[#0ea5e9] px-6 py-3 text-sm font-semibold text-white transition-all hover:bg-[#a855f7] hover:shadow-lg hover:shadow-[#0ea5e9]/20 sm:w-auto"
-            >
-              <Download className="h-4 w-4" />
-              Open CV
-            </a>
-            <div className="flex w-full gap-3 sm:w-auto">
-              <a
-                href="https://linkedin.com/in/ashwani-kumar5"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex flex-1 items-center justify-center gap-2 rounded-full border border-[#333] px-5 py-3 text-sm font-medium transition-all hover:border-[#0ea5e9] hover:text-[#0ea5e9] sm:flex-initial sm:px-6"
-              >
-                <Linkedin className="h-4 w-4" />
-                LinkedIn
-              </a>
-              <a
-                href="https://github.com/ashuksmile"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex flex-1 items-center justify-center gap-2 rounded-full border border-[#333] px-5 py-3 text-sm font-medium transition-all hover:border-[#0ea5e9] hover:text-[#0ea5e9] sm:flex-initial sm:px-6"
-              >
-                <Github className="h-4 w-4" />
-                GitHub
-              </a>
+            <div className="relative overflow-hidden rounded-full border border-slate-700/70 bg-slate-900/55 p-2 shadow-[0_0_18px_rgba(15,23,42,0.35)] backdrop-blur-xl sm:p-2.5">
+              <div className="absolute right-0 top-0 h-12 w-12 rounded-full bg-cyan-300/10 blur-xl" />
+              <div className="relative aspect-square overflow-hidden rounded-full border border-slate-700/80">
+                <Image
+                  src={profilePhoto}
+                  alt="Ashwani Kumar"
+                  width={340}
+                  height={340}
+                  className="h-full w-full object-cover object-top"
+                  priority
+                />
+              </div>
             </div>
           </motion.div>
         </div>
 
-        {/* Scroll indicator */}
         <motion.div
           className="absolute bottom-6 left-1/2 -translate-x-1/2 sm:bottom-8"
           animate={{ y: [0, 10, 0] }}
           transition={{ repeat: Infinity, duration: 2 }}
         >
-          <ChevronRight className="h-6 w-6 rotate-90 text-[#555]" />
+          <ChevronRight className="h-6 w-6 rotate-90 text-slate-500" />
         </motion.div>
       </section>
 
       {/* ── ABOUT ── */}
-      <section id="about" className="mx-auto max-w-6xl px-4 py-12 sm:py-16 md:px-8 md:py-20 relative z-10" style={{ perspective: 1000 }}>
+      <motion.section id="about" className="mx-auto max-w-6xl px-4 py-12 sm:py-16 md:px-8 md:py-20 relative z-10" style={{ perspective: 1000 }} variants={sectionReveal} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.15 }}>
         <SectionHeading icon={Briefcase} title="About Me" />
         <motion.div
           className="rounded-2xl border border-[#1e293b] bg-[#0f172a]/80 backdrop-blur-sm p-6 md:p-8 cursor-pointer transition-colors hover:border-[#0ea5e9]/50 shadow-lg"
           variants={fadeUp}
           initial="hidden"
           whileInView="visible"
-          whileHover={{ scale: 1.02, rotateX: 2, rotateY: -2, z: 20 }}
-          transition={{ type: "spring", stiffness: 300, damping: 20 }}
+          whileHover={{ y: -4, scale: 1.01 }}
+          transition={{ duration: 0.25, ease: "easeOut" }}
           viewport={{ once: true }}
           custom={1}
         >
@@ -572,129 +623,171 @@ export default function Home() {
             solutions.
           </p>
         </motion.div>
-      </section>
+      </motion.section>
 
       {/* ── SKILLS ── */}
-      <section id="skills" className="mx-auto max-w-6xl px-4 py-12 sm:py-16 md:px-8 md:py-20" style={{ perspective: 1000 }}>
-        <SectionHeading icon={Code2} title="Skills" />
+      <motion.section id="skills" className="mx-auto max-w-6xl px-4 py-12 sm:py-16 md:px-8 md:py-20" style={{ perspective: 1000 }} variants={sectionReveal} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.15 }}>
+        <SectionHeading icon={Code2} title="Technical Arsenal" />
+
         <motion.div
-          className="grid gap-6 sm:grid-cols-2"
+          className="mb-6 space-y-3 overflow-hidden"
+          variants={fadeUp}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.2 }}
+          custom={0}
+        >
+          <p className="text-sm text-[#9fb0c8]">
+            Tools, languages, and frameworks I use to build production-ready systems.
+          </p>
+
+          <div className="space-y-5 pt-2">
+            <div className="relative overflow-hidden rounded-xl">
+              <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-28 bg-gradient-to-r from-[#01040d] via-[#01040d]/95 to-transparent" />
+              <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-28 bg-gradient-to-l from-[#01040d] via-[#01040d]/95 to-transparent" />
+              <motion.div
+                className="flex w-max gap-5"
+                animate={{ x: ["0%", "-50%"] }}
+                transition={{ duration: 28, repeat: Infinity, ease: "linear" }}
+              >
+                {[...arsenalTrackOne, ...arsenalTrackOne].map((item, index) => (
+                  <span
+                    key={`track-1-${item}-${index}`}
+                    className="rounded-full border border-cyan-400/20 bg-cyan-400/10 px-4 py-2 text-base font-medium text-cyan-200"
+                  >
+                    {item}
+                  </span>
+                ))}
+              </motion.div>
+            </div>
+
+            <div className="relative overflow-hidden rounded-xl">
+              <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-28 bg-gradient-to-r from-[#01040d] via-[#01040d]/95 to-transparent" />
+              <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-28 bg-gradient-to-l from-[#01040d] via-[#01040d]/95 to-transparent" />
+              <motion.div
+                className="flex w-max gap-5"
+                animate={{ x: ["-50%", "0%"] }}
+                transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
+              >
+                {[...arsenalTrackTwo, ...arsenalTrackTwo].map((item, index) => (
+                  <span
+                    key={`track-2-${item}-${index}`}
+                    className="rounded-full border border-[#334155] bg-[#0f172a] px-4 py-2 text-base font-medium text-[#cbd5e1]"
+                  >
+                    {item}
+                  </span>
+                ))}
+              </motion.div>
+            </div>
+          </div>
+        </motion.div>
+      </motion.section>
+
+      {/* ── PROJECTS ── */}
+      <motion.section id="projects" className="mx-auto max-w-6xl px-4 py-12 sm:py-16 md:px-8 md:py-20" style={{ perspective: 1000 }} variants={sectionReveal} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.15 }}>
+        <SectionHeading icon={Wrench} title="Projects" />
+        <motion.div
+          className="grid gap-6 md:grid-cols-2 xl:grid-cols-3"
           variants={stagger}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.2 }}
         >
-          {Object.entries(skills).map(([category, items], index) => (
+          {projects.map((p) => (
             <motion.div
-              key={category}
-              className="rounded-2xl border border-[#1e293b] bg-[#0f172a]/80 backdrop-blur-sm p-6 transition-all hover:border-[#0ea5e9]/50 hover:shadow-lg hover:shadow-[#0ea5e9]/10 cursor-pointer"
+              key={p.title}
+              className="group flex h-full flex-col overflow-hidden rounded-2xl border border-[#1e293b] bg-[#0f172a]/85 backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-cyan-400/45 hover:shadow-xl hover:shadow-cyan-400/10"
               variants={scaleIn}
-              whileHover={{ 
-                scale: 1.05, 
-                rotateY: index % 2 === 0 ? 5 : -5, 
-                rotateX: 5,
-                z: 30
-              }}
-              whileTap={{ scale: 0.95 }}
-              transition={{ type: "spring", stiffness: 400, damping: 15 }}
+              whileHover={{ y: -4, scale: 1.005 }}
+              whileTap={{ scale: 0.99 }}
+              transition={{ duration: 0.25, ease: "easeOut" }}
             >
-              <h3 className="mb-4 text-sm font-semibold uppercase tracking-wider text-[#0ea5e9]">
-                {category}
-              </h3>
-              <div className="flex flex-wrap gap-2">
-                {items.map((s) => (
-                  <Tag key={s}>{s}</Tag>
-                ))}
+              <div className="relative aspect-[16/9] overflow-hidden border-b border-[#1e293b]">
+                <Image
+                  src={p.preview}
+                  alt={`${p.title} preview`}
+                  fill
+                  sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
+                  className="object-cover transition-transform duration-500 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#020617]/70 via-transparent to-transparent" />
+              </div>
+
+              <div className="flex flex-1 flex-col p-5 md:p-6">
+                <div className="mb-4 flex items-start justify-between gap-3">
+                  <h3 className="text-lg font-semibold leading-tight text-[#e5e7eb] transition-colors group-hover:text-cyan-200 md:text-xl">
+                    {p.title}
+                  </h3>
+                  <span className="shrink-0 rounded-full border border-[#334155] px-2.5 py-1 text-[11px] font-medium text-[#94a3b8]">
+                    {p.date}
+                  </span>
+                </div>
+
+                <div className="mb-5 flex flex-wrap gap-2">
+                  {p.tech.map((t) => (
+                    <span
+                      key={t}
+                      className="rounded-full border border-cyan-500/25 bg-cyan-500/10 px-2.5 py-1 text-xs font-medium text-cyan-200"
+                    >
+                      {t}
+                    </span>
+                  ))}
+                </div>
+
+                <div className="space-y-3 text-sm leading-relaxed text-[#aab4c3]">
+                  <p>
+                    <span className="font-semibold text-[#e2e8f0]">Problem:</span> {p.problem}
+                  </p>
+                  <p>
+                    <span className="font-semibold text-[#e2e8f0]">Solution:</span> {p.solution}
+                  </p>
+                  <p>
+                    <span className="font-semibold text-[#e2e8f0]">Impact:</span> {p.impact}
+                  </p>
+                </div>
+
+                <div className="mt-6 flex flex-wrap gap-3">
+                  <a
+                    href={p.github || "#"}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium transition-all duration-300 ${p.github ? "border border-[#334155] text-[#dbe3ef] hover:border-cyan-400/60 hover:text-cyan-200" : "cursor-not-allowed border border-[#253041] text-[#5f6b80]"}`}
+                    onClick={(e) => {
+                      if (!p.github) e.preventDefault();
+                    }}
+                  >
+                    <Github className="h-4 w-4" />
+                    GitHub
+                  </a>
+                  <a
+                    href={p.demo || "#"}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium transition-all duration-300 ${p.demo ? "bg-cyan-400 text-[#082f49] hover:bg-cyan-300" : "cursor-not-allowed bg-[#1e293b] text-[#7b8798]"}`}
+                    onClick={(e) => {
+                      if (!p.demo) e.preventDefault();
+                    }}
+                  >
+                    <ExternalLink className="h-4 w-4" />
+                    Live Demo
+                  </a>
+                </div>
               </div>
             </motion.div>
           ))}
         </motion.div>
-      </section>
-
-      {/* ── PROJECTS ── */}
-      <section id="projects" className="mx-auto max-w-6xl px-4 py-12 sm:py-16 md:px-8 md:py-20" style={{ perspective: 1000 }}>
-        <SectionHeading icon={Wrench} title="Projects" />
-        <div className="space-y-6">
-          {projects.map((p, i) => (
-            <motion.div
-              key={p.title}
-              className={`group rounded-2xl border border-[#1e293b] bg-[#0f172a]/80 backdrop-blur-sm p-6 transition-all hover:border-[#0ea5e9]/50 hover:shadow-xl hover:shadow-[#0ea5e9]/10 md:p-8 relative overflow-hidden ${p.link ? "cursor-pointer" : "cursor-default"}`}
-              variants={fadeUp}
-              initial="hidden"
-              whileInView="visible"
-              whileHover={{ 
-                scale: 1.02, 
-                rotateX: 2,
-                rotateY: i % 2 === 0 ? 2 : -2,
-                z: 40 
-              }}
-              whileTap={{ scale: 0.98 }}
-              transition={{ type: "spring", stiffness: 300, damping: 20 }}
-              viewport={{ once: true }}
-              custom={i}
-              onClick={() => {
-                if (p.link) {
-                  window.open(p.link, "_blank", "noopener,noreferrer");
-                }
-              }}
-              onKeyDown={(e) => {
-                if (!p.link) return;
-                if (e.key === "Enter" || e.key === " ") {
-                  e.preventDefault();
-                  window.open(p.link, "_blank", "noopener,noreferrer");
-                }
-              }}
-              role={p.link ? "link" : undefined}
-              tabIndex={p.link ? 0 : -1}
-              aria-label={p.link ? `Open ${p.title} on GitHub` : undefined}
-            >
-              <div className="mb-4 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-                <div className="flex items-center gap-3">
-                  <h3 className={`text-lg font-bold md:text-xl transition-colors ${p.link ? "text-[#e5e7eb] group-hover:text-[#0ea5e9]" : ""}`}>{p.title}</h3>
-                  {p.link && (
-                    <span
-                      title={`Open ${p.title} on GitHub`}
-                      className="text-[#0ea5e9] transition-colors group-hover:text-[#a855f7]"
-                    >
-                      <ExternalLink className="h-4 w-4" />
-                    </span>
-                  )}
-                </div>
-                <span className="text-xs font-medium text-[#888]">
-                  {p.date}
-                </span>
-              </div>
-              <div className="mb-4 flex flex-wrap gap-2">
-                {p.tech.map((t) => (
-                  <Tag key={t}>{t}</Tag>
-                ))}
-              </div>
-              <ul className="space-y-2">
-                {p.points.map((pt, j) => (
-                  <li
-                    key={j}
-                    className="flex items-start gap-2 text-sm leading-relaxed text-[#aaa]"
-                  >
-                    <ChevronRight className="mt-0.5 h-4 w-4 shrink-0 text-[#0ea5e9]" />
-                    {pt}
-                  </li>
-                ))}
-              </ul>
-            </motion.div>
-          ))}
-        </div>
-      </section>
+      </motion.section>
 
       {/* ── TRAINING ── */}
-      <section id="training" className="mx-auto max-w-6xl px-4 py-12 sm:py-16 md:px-8 md:py-20" style={{ perspective: 1000 }}>
+      <motion.section id="training" className="mx-auto max-w-6xl px-4 py-12 sm:py-16 md:px-8 md:py-20" style={{ perspective: 1000 }} variants={sectionReveal} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.15 }}>
         <SectionHeading icon={BookOpen} title="Training" />
         <motion.div
-          className="rounded-2xl border border-[#1e293b] bg-[#0f172a]/80 backdrop-blur-sm p-6 md:p-8 cursor-pointer transition-all hover:border-[#0ea5e9]/50 hover:shadow-lg hover:shadow-[#0ea5e9]/10"
+          className="rounded-2xl border border-[#1e293b] bg-[#0f172a]/80 backdrop-blur-sm p-6 md:p-8 cursor-pointer transition-all duration-300 hover:border-[#0ea5e9]/45 hover:shadow-lg hover:shadow-[#0ea5e9]/8"
           variants={fadeUp}
           initial="hidden"
           whileInView="visible"
-          whileHover={{ scale: 1.02, rotateX: 2, rotateY: 1, z: 20 }}
-          transition={{ type: "spring", stiffness: 300, damping: 20 }}
+          whileHover={{ y: -4, scale: 1.01 }}
+          transition={{ duration: 0.25, ease: "easeOut" }}
           viewport={{ once: true }}
           custom={0}
         >
@@ -724,13 +817,17 @@ export default function Home() {
             </li>
           </ul>
         </motion.div>
-      </section>
+      </motion.section>
 
       {/* ── CERTIFICATES ── */}
-      <section
+      <motion.section
         id="certificates"
         className="mx-auto max-w-6xl px-4 py-12 sm:py-16 md:px-8 md:py-20"
         style={{ perspective: 1000 }}
+        variants={sectionReveal}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.15 }}
       >
         <SectionHeading icon={Award} title="Certificates" />
         <motion.div
@@ -743,16 +840,11 @@ export default function Home() {
           {certificates.map((c, index) => (
             <motion.div
               key={c.title}
-              className="rounded-2xl border border-[#1e293b] bg-[#0f172a]/80 backdrop-blur-sm p-5 transition-all hover:border-[#0ea5e9]/50 hover:shadow-lg hover:shadow-[#0ea5e9]/10 cursor-pointer"
+              className="rounded-2xl border border-[#1e293b] bg-[#0f172a]/80 backdrop-blur-sm p-5 transition-all duration-300 hover:border-[#0ea5e9]/45 hover:shadow-lg hover:shadow-[#0ea5e9]/8 cursor-pointer"
               variants={scaleIn}
-              whileHover={{ 
-                scale: 1.05, 
-                rotateX: 6,
-                rotateY: index % 2 === 0 ? 5 : -5,
-                z: 25 
-              }}
-              whileTap={{ scale: 0.95 }}
-              transition={{ type: "spring", stiffness: 400, damping: 15 }}
+              whileHover={{ y: -4, scale: 1.01 }}
+              whileTap={{ scale: 0.99 }}
+              transition={{ duration: 0.25, ease: "easeOut" }}
             >
               <Award className="mb-3 h-5 w-5 text-[#0ea5e9]" />
               <h3 className="mb-1 text-sm font-semibold leading-snug">
@@ -764,18 +856,18 @@ export default function Home() {
             </motion.div>
           ))}
         </motion.div>
-      </section>
+      </motion.section>
 
       {/* ── ACHIEVEMENTS ── */}
-      <section className="mx-auto max-w-6xl px-4 py-12 sm:py-16 md:px-8 md:py-20" style={{ perspective: 1000 }}>
+      <motion.section className="mx-auto max-w-6xl px-4 py-12 sm:py-16 md:px-8 md:py-20" style={{ perspective: 1000 }} variants={sectionReveal} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.15 }}>
         <SectionHeading icon={Trophy} title="Achievements" />
         <motion.div
-          className="rounded-2xl border border-[#1e293b] bg-[#0f172a]/80 backdrop-blur-sm p-6 md:p-8 cursor-pointer transition-all hover:border-yellow-500/50 hover:shadow-lg hover:shadow-yellow-500/10"
+          className="rounded-2xl border border-[#1e293b] bg-[#0f172a]/80 backdrop-blur-sm p-6 md:p-8 cursor-pointer transition-all duration-300 hover:border-yellow-500/45 hover:shadow-lg hover:shadow-yellow-500/8"
           variants={fadeUp}
           initial="hidden"
           whileInView="visible"
-          whileHover={{ scale: 1.02, rotateX: -2, rotateY: 2, z: 20 }}
-          transition={{ type: "spring", stiffness: 300, damping: 20 }}
+          whileHover={{ y: -4, scale: 1.01 }}
+          transition={{ duration: 0.25, ease: "easeOut" }}
           viewport={{ once: true }}
           custom={0}
         >
@@ -796,33 +888,34 @@ export default function Home() {
             </div>
           </div>
         </motion.div>
-      </section>
+      </motion.section>
 
       {/* ── EDUCATION ── */}
-      <section
+      <motion.section
         id="education"
         className="mx-auto max-w-6xl px-4 py-12 sm:py-16 md:px-8 md:py-20"
         style={{ perspective: 1000 }}
+        variants={sectionReveal}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.15 }}
       >
         <SectionHeading icon={GraduationCap} title="Education" />
-        <div className="grid gap-5 sm:gap-6">
+        <motion.div
+          className="grid gap-5 sm:gap-6"
+          variants={stagger}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.2 }}
+        >
           {education.map((e, i) => (
             <motion.div
               key={e.institution}
-              className="relative rounded-2xl border border-[#1e293b] bg-[#0f172a]/80 backdrop-blur-sm p-5 transition-all hover:border-[#0ea5e9]/50 hover:shadow-lg hover:shadow-[#0ea5e9]/10 sm:p-6 cursor-pointer"
-              variants={fadeUp}
-              initial="hidden"
-              whileInView="visible"
-              whileHover={{ 
-                scale: 1.02, 
-                rotateX: i % 2 === 0 ? 2 : -2,
-                rotateY: 1, 
-                z: 30 
-              }}
-              whileTap={{ scale: 0.98 }}
-              transition={{ type: "spring", stiffness: 300, damping: 20 }}
-              viewport={{ once: true }}
-              custom={i}
+              className="relative rounded-2xl border border-[#1e293b] bg-[#0f172a]/80 backdrop-blur-sm p-5 transition-all duration-300 hover:border-[#0ea5e9]/45 hover:shadow-lg hover:shadow-[#0ea5e9]/8 sm:p-6 cursor-pointer"
+              variants={scaleIn}
+              whileHover={{ y: -4, scale: 1.01 }}
+              whileTap={{ scale: 0.99 }}
+              transition={{ duration: 0.25, ease: "easeOut" }}
             >
               <div className="mb-1 flex items-center gap-3">
                 <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-[#0ea5e9]/10">
@@ -844,11 +937,11 @@ export default function Home() {
               </div>
             </motion.div>
           ))}
-        </div>
-      </section>
+        </motion.div>
+      </motion.section>
 
       {/* ── LET'S CONNECT ── */}
-      <section id="contact" className="mx-auto max-w-6xl px-4 py-12 sm:py-16 md:px-8 md:py-20">
+      <motion.section id="contact" className="mx-auto max-w-6xl px-4 py-12 sm:py-16 md:px-8 md:py-20" variants={sectionReveal} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.15 }}>
         <SectionHeading icon={Mail} title="Let's Connect" />
         <motion.div
           className="flex flex-col items-center justify-center rounded-3xl border border-[#1e293b] bg-gradient-to-b from-[#0f172a]/80 to-[#020617]/80 backdrop-blur-sm p-10 text-center md:py-16"
@@ -864,14 +957,14 @@ export default function Home() {
           </p>
           <motion.a
             href="mailto:ashwanikumar.contact@gmail.com"
-            className="inline-flex h-12 items-center justify-center rounded-full bg-[#0ea5e9] px-8 text-sm font-medium text-white transition-all hover:bg-[#a855f7] hover:shadow-[0_0_20px_rgba(99,102,241,0.4)]"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
+            className="inline-flex h-12 items-center justify-center rounded-full bg-[#0ea5e9] px-8 text-sm font-medium text-white transition-all duration-300 hover:bg-[#38bdf8] hover:shadow-[0_0_14px_rgba(56,189,248,0.28)]"
+            whileHover={{ y: -2, scale: 1.01 }}
+            whileTap={{ scale: 0.99 }}
           >
             Say Hello
           </motion.a>
         </motion.div>
-      </section>
+      </motion.section>
 
       {/* ── FOOTER ── */}
       <footer className="border-t border-[#1e293b] py-10 relative z-10">
@@ -885,6 +978,8 @@ export default function Home() {
               href="https://linkedin.com/in/ashwani-kumar5"
               target="_blank"
               rel="noopener noreferrer"
+              title="LinkedIn profile"
+              aria-label="LinkedIn profile"
               className="text-[#555] transition-colors hover:text-[#0ea5e9]"
             >
               <Linkedin className="h-5 w-5" />
@@ -893,6 +988,8 @@ export default function Home() {
               href="https://github.com/ashuksmile"
               target="_blank"
               rel="noopener noreferrer"
+              title="GitHub profile"
+              aria-label="GitHub profile"
               className="text-[#555] transition-colors hover:text-[#0ea5e9]"
             >
               <Github className="h-5 w-5" />

@@ -1,0 +1,16 @@
+<svg width="1200" height="675" viewBox="0 0 1200 675" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="80" y1="40" x2="1120" y2="635" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0F172A"/>
+      <stop offset="1" stop-color="#0C4A6E"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="675" fill="url(#bg)"/>
+  <rect x="80" y="70" width="1040" height="535" rx="24" fill="#0B1220" stroke="#1E293B"/>
+  <text x="130" y="155" fill="#F8FAFC" font-family="Arial, sans-serif" font-size="40" font-weight="700">Thumbnaily.ai Workspace</text>
+  <text x="130" y="205" fill="#CBD5E1" font-family="Arial, sans-serif" font-size="24">Generate high-converting thumbnails from prompts</text>
+  <rect x="130" y="250" width="330" height="290" rx="16" fill="#111827" stroke="#334155"/>
+  <rect x="480" y="250" width="590" height="95" rx="14" fill="#111827" stroke="#334155"/>
+  <rect x="480" y="360" width="590" height="95" rx="14" fill="#111827" stroke="#334155"/>
+  <rect x="480" y="470" width="320" height="70" rx="35" fill="#06B6D4" fill-opacity="0.16" stroke="#22D3EE"/>
+</svg>

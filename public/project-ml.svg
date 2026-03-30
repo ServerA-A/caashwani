@@ -1,0 +1,22 @@
+<svg width="1200" height="675" viewBox="0 0 1200 675" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1200" y2="675" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0B1220"/>
+      <stop offset="1" stop-color="#0F2B3A"/>
+    </linearGradient>
+    <linearGradient id="line" x1="120" y1="120" x2="1080" y2="120" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#22D3EE" stop-opacity="0.9"/>
+      <stop offset="1" stop-color="#0EA5E9" stop-opacity="0.2"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="675" fill="url(#bg)"/>
+  <rect x="80" y="80" width="1040" height="515" rx="24" fill="#0F172A" stroke="#1E293B"/>
+  <text x="130" y="170" fill="#E2E8F0" font-family="Arial, sans-serif" font-size="40" font-weight="700">Sentiment Analysis Dashboard</text>
+  <text x="130" y="218" fill="#94A3B8" font-family="Arial, sans-serif" font-size="24">Model confidence and polarity trends</text>
+  <line x1="130" y1="252" x2="1070" y2="252" stroke="url(#line)" stroke-width="2"/>
+  <rect x="130" y="290" width="300" height="220" rx="16" fill="#111827" stroke="#334155"/>
+  <rect x="460" y="290" width="610" height="36" rx="10" fill="#111827" stroke="#334155"/>
+  <rect x="460" y="338" width="610" height="36" rx="10" fill="#111827" stroke="#334155"/>
+  <rect x="460" y="386" width="610" height="36" rx="10" fill="#111827" stroke="#334155"/>
+  <rect x="460" y="434" width="470" height="36" rx="10" fill="#111827" stroke="#334155"/>
+</svg>
