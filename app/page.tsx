@@ -277,7 +277,7 @@ export default function Home() {
       title: "HireSense - AI-Powered Recruitment Assistant",
       tech: ["Python", "Machine Learning", "NLP", "Scikit-learn"],
       date: "Mar 2026",
-      preview: "/project-banksys.svg",
+      preview: "/project-hiresense.svg",
       github: "https://github.com/ashuksmile/HireSense",
       demo: "",
       problem:
