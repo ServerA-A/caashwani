@@ -15,6 +15,19 @@
   --font-mono: var(--font-geist-mono);
 }
 
+:root {
+  --color-background: #0a0a0a;
+  --color-foreground: #ededed;
+  --color-card: #111111;
+  --color-card-hover: #1a1a1a;
+  --color-border: #222222;
+  --color-accent: #6366f1;
+  --color-accent-light: #818cf8;
+  --color-muted: #888888;
+  --color-tag-bg: #1e1e2e;
+  --color-tag-text: #a5b4fc;
+}
+
 * {
   scrollbar-width: thin;
   scrollbar-color: #333 transparent;

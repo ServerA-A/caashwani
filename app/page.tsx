@@ -119,7 +119,7 @@ function Navbar() {
             </a>
           ))}
           <a
-            href="/cv-latest.pdf?v=20260325"
+            href="https://drive.google.com/file/d/19Ofn4vGtl-Fj1tIznOad6B5yAEHdh5kJ/view?usp=sharing"
             target="_blank"
             rel="noopener noreferrer"
             className="ml-2 flex items-center gap-2 rounded-full bg-[#0ea5e9] px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-[#a855f7]"
@@ -166,7 +166,7 @@ function Navbar() {
             </a>
           ))}
           <a
-            href="/cv-latest.pdf?v=20260325"
+            href="https://drive.google.com/file/d/19Ofn4vGtl-Fj1tIznOad6B5yAEHdh5kJ/view?usp=sharing"
             target="_blank"
             rel="noopener noreferrer"
             className="mt-2 flex w-full items-center justify-center gap-2 rounded-full bg-[#0ea5e9] px-4 py-2.5 text-sm font-medium text-white"
@@ -356,7 +356,7 @@ export default function Home() {
   ];
 
   return (
-    <div ref={containerRef} className="relative min-h-screen bg-[#01040d] overflow-x-hidden text-neutral-200">
+    <div ref={containerRef} className="relative min-h-screen overflow-x-hidden" style={{ backgroundColor: "var(--color-background)", color: "var(--color-foreground)" }}>
       {/* ── FLOATING BACKGROUND ── */}
       <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden">
         {/* Dynamic Star background layer */}
