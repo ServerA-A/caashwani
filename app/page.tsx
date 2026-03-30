@@ -274,18 +274,18 @@ export default function Home() {
         "Delivered reliable sentiment classification with measurable precision/recall improvements and a repeatable workflow for future datasets.",
     },
     {
-      title: "BankSys - Banking Management System",
-      tech: ["C++", "File Handling", "Data Structures"],
-      date: "Jun – Jul 2025",
+      title: "HireSense - AI-Powered Recruitment Assistant",
+      tech: ["Python", "Machine Learning", "NLP", "Scikit-learn"],
+      date: "Mar 2026",
       preview: "/project-banksys.svg",
-      github: "https://github.com/ashuksmile",
+      github: "https://github.com/ashuksmile/HireSense",
       demo: "",
       problem:
-        "Basic banking workflows were fragmented and error-prone in command-line training projects.",
+        "Recruitment teams needed faster and more consistent resume screening, but manual review was slow and difficult to scale.",
       solution:
-        "Engineered a modular C++ banking system with account lifecycle operations, file persistence, and structured transaction history.",
+        "Engineered an AI-powered recruitment workflow that extracts resume features, matches candidates to job requirements, and scores profiles using NLP and machine learning.",
       impact:
-        "Improved reliability and maintainability of core operations while creating a scalable base for additional banking features.",
+        "Reduced manual screening effort by automating candidate evaluation and ranking, improving hiring efficiency with structured insights.",
     },
     {
       title: "Thumbnaily.in",
