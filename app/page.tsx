@@ -119,7 +119,7 @@ function Navbar() {
             </a>
           ))}
           <a
-            href="https://drive.google.com/file/d/19Ofn4vGtl-Fj1tIznOad6B5yAEHdh5kJ/view?usp=sharing"
+            href="/Ashwani_Kumar.pdf"
             target="_blank"
             rel="noopener noreferrer"
             className="ml-2 flex items-center gap-2 rounded-full bg-[#0ea5e9] px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-[#a855f7]"
@@ -166,7 +166,7 @@ function Navbar() {
             </a>
           ))}
           <a
-            href="https://drive.google.com/file/d/19Ofn4vGtl-Fj1tIznOad6B5yAEHdh5kJ/view?usp=sharing"
+            href="/Ashwani_Kumar.pdf"
             target="_blank"
             rel="noopener noreferrer"
             className="mt-2 flex w-full items-center justify-center gap-2 rounded-full bg-[#0ea5e9] px-4 py-2.5 text-sm font-medium text-white"
@@ -187,6 +187,7 @@ export default function Home() {
   const [headlineWordIndex, setHeadlineWordIndex] = useState(0);
   const [headlineCharIndex, setHeadlineCharIndex] = useState(0);
   const [isDeletingHeadline, setIsDeletingHeadline] = useState(false);
+  const meetingScheduleUrl = "https://cal.com/ashwani-kumar/15min";
 
   useEffect(() => {
     const currentWord = heroHeadlineWords[headlineWordIndex];
@@ -940,29 +941,33 @@ export default function Home() {
         </motion.div>
       </motion.section>
 
-      {/* ── LET'S CONNECT ── */}
+      {/* ── BOOK A MEETING ── */}
       <motion.section id="contact" className="mx-auto max-w-6xl px-4 py-12 sm:py-16 md:px-8 md:py-20" variants={sectionReveal} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.15 }}>
-        <SectionHeading icon={Mail} title="Let's Connect" />
         <motion.div
-          className="flex flex-col items-center justify-center rounded-3xl border border-[#1e293b] bg-gradient-to-b from-[#0f172a]/80 to-[#020617]/80 backdrop-blur-sm p-10 text-center md:py-16"
+          className="rounded-3xl border border-[#1e293b] bg-gradient-to-b from-[#0f172a]/80 to-[#020617]/80 p-6 text-center shadow-[0_20px_80px_rgba(2,6,23,0.45)] backdrop-blur-sm md:p-10"
           variants={fadeUp}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
           custom={0}
         >
-          <h3 className="mb-4 text-2xl font-bold md:text-4xl">Interested in working together?</h3>
-          <p className="mx-auto mb-8 max-w-xl text-[#888] md:text-lg">
-            I'm currently looking for new opportunities. Whether you have a question or just want to say hi, I'll try my best to get back to you!
+          <p className="mx-auto mb-5 inline-flex items-center rounded-full border border-[#334155] bg-[#0b1220] px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-200">
+            Book a Meeting
           </p>
-          <motion.a
-            href="mailto:ashwanikumar.contact@gmail.com"
-            className="inline-flex h-12 items-center justify-center rounded-full bg-[#0ea5e9] px-8 text-sm font-medium text-white transition-all duration-300 hover:bg-[#38bdf8] hover:shadow-[0_0_14px_rgba(56,189,248,0.28)]"
-            whileHover={{ y: -2, scale: 1.01 }}
-            whileTap={{ scale: 0.99 }}
-          >
-            Say Hello
-          </motion.a>
+          <h3 className="mb-4 text-3xl font-bold text-slate-100 md:text-5xl">Let's Talk</h3>
+          <p className="mx-auto mb-8 max-w-2xl text-[#94a3b8] md:text-lg">
+            Want to discuss a project, collaboration, or just say hi? Pick a time that works best for you below.
+          </p>
+
+          <div className="overflow-hidden rounded-2xl border border-[#1e293b] bg-[#0b111d]">
+            <iframe
+              src={meetingScheduleUrl}
+              className="h-[760px] w-full"
+              title="Schedule a meeting"
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+            />
+          </div>
         </motion.div>
       </motion.section>
 
