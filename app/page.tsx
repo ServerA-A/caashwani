@@ -605,7 +605,7 @@ export default function Home() {
       <motion.section id="about" className="mx-auto max-w-6xl px-4 py-12 sm:py-16 md:px-8 md:py-20 relative z-10" style={{ perspective: 1000 }} variants={sectionReveal} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.15 }}>
         <SectionHeading icon={Briefcase} title="About Me" />
         <motion.div
-          className="rounded-2xl border border-[#1e293b] bg-[#0f172a]/80 backdrop-blur-sm p-6 md:p-8 cursor-pointer transition-colors hover:border-[#0ea5e9]/50 shadow-lg"
+          className="group relative rounded-2xl bg-[#0f172a]/80 p-6 shadow-lg backdrop-blur-sm transition-transform md:p-8"
           variants={fadeUp}
           initial="hidden"
           whileInView="visible"
@@ -614,14 +614,14 @@ export default function Home() {
           viewport={{ once: true }}
           custom={1}
         >
+          <div className="pointer-events-none absolute -inset-3 -z-10 rounded-[1.4rem] bg-cyan-400/20 opacity-0 blur-2xl transition-opacity duration-300 group-hover:opacity-50" />
           <p className="leading-relaxed text-[#aaa] md:text-lg">
-            I am a B.Tech Computer Science student at Lovely Professional
-            University with a strong foundation in programming, data structures,
-            and full-stack development. I have hands-on experience building
-            production-grade applications with Next.js, integrating AI services,
-            and developing machine learning models. I thrive in collaborative
-            environments and love turning complex problems into elegant
-            solutions.
+            I'm an MVP builder and full-stack developer, turning ideas into
+            end-to-end, production-ready products using a modern tech stack. As
+            a B.Tech Computer Science student at Lovely Professional
+            University, I've built applications with Next.js, integrated AI
+            services, and developed machine learning models, focused on solving
+            real-world problems efficiently.
           </p>
         </motion.div>
       </motion.section>
