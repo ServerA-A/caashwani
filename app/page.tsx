@@ -581,7 +581,8 @@ export default function Home() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.15 }}
           >
-            <div className="relative overflow-hidden rounded-full border border-slate-700/70 bg-slate-900/55 p-2 shadow-[0_0_18px_rgba(15,23,42,0.35)] backdrop-blur-xl sm:p-2.5">
+            <div className="group relative overflow-hidden rounded-full border border-slate-700/70 bg-slate-900/55 p-2 shadow-[0_0_18px_rgba(15,23,42,0.35)] backdrop-blur-xl sm:p-2.5">
+              <div className="pointer-events-none absolute inset-0 rounded-full bg-cyan-300/20 opacity-0 blur-2xl transition-opacity duration-300 group-hover:opacity-30" />
               <div className="absolute right-0 top-0 h-12 w-12 rounded-full bg-cyan-300/10 blur-xl" />
               <div className="relative aspect-square overflow-hidden rounded-full border border-slate-700/80">
                 <Image
@@ -619,7 +620,7 @@ export default function Home() {
           viewport={{ once: true }}
           custom={1}
         >
-          <div className="pointer-events-none absolute -inset-3 -z-10 rounded-[1.4rem] bg-cyan-400/20 opacity-0 blur-2xl transition-opacity duration-300 group-hover:opacity-50" />
+          <div className="pointer-events-none absolute -inset-3 -z-10 rounded-[1.4rem] bg-cyan-400/20 opacity-0 blur-2xl transition-opacity duration-300 group-hover:opacity-30" />
           <p className="text-base leading-relaxed text-[#aaa] md:text-lg">
             I'm an MVP builder and full-stack developer, turning ideas into
             end-to-end, production-ready products using a modern tech stack. As
@@ -702,12 +703,13 @@ export default function Home() {
           {projects.map((p) => (
             <motion.div
               key={p.title}
-              className="group flex h-full flex-col overflow-hidden rounded-2xl border border-[#1e293b] bg-[#0f172a]/85 backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-cyan-400/45 hover:shadow-xl hover:shadow-cyan-400/10"
+              className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-[#1e293b] bg-[#0f172a]/85 backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-cyan-400/45 hover:shadow-xl hover:shadow-cyan-400/10"
               variants={scaleIn}
               whileHover={{ y: -4, scale: 1.005 }}
               whileTap={{ scale: 0.99 }}
               transition={{ duration: 0.25, ease: "easeOut" }}
             >
+              <div className="pointer-events-none absolute -inset-2 -z-10 rounded-[1.15rem] bg-cyan-400/20 opacity-0 blur-2xl transition-opacity duration-300 group-hover:opacity-30" />
               <div className="relative aspect-[16/9] overflow-hidden border-b border-[#1e293b]">
                 <Image
                   src={p.preview}
@@ -788,7 +790,7 @@ export default function Home() {
       <motion.section id="training" className="mx-auto max-w-6xl px-4 py-12 sm:py-16 md:px-8 md:py-20" style={{ perspective: 1000 }} variants={sectionReveal} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.15 }}>
         <SectionHeading icon={BookOpen} title="Training" />
         <motion.div
-          className="rounded-2xl border border-[#1e293b] bg-[#0f172a]/80 backdrop-blur-sm p-6 md:p-8 cursor-pointer transition-all duration-300 hover:border-[#0ea5e9]/45 hover:shadow-lg hover:shadow-[#0ea5e9]/8"
+          className="group relative rounded-2xl border border-[#1e293b] bg-[#0f172a]/80 p-6 backdrop-blur-sm cursor-pointer transition-all duration-300 hover:border-[#0ea5e9]/45 hover:shadow-lg hover:shadow-[#0ea5e9]/8 md:p-8"
           variants={fadeUp}
           initial="hidden"
           whileInView="visible"
@@ -797,6 +799,7 @@ export default function Home() {
           viewport={{ once: true }}
           custom={0}
         >
+          <div className="pointer-events-none absolute -inset-2 -z-10 rounded-[1.15rem] bg-cyan-400/20 opacity-0 blur-2xl transition-opacity duration-300 group-hover:opacity-30" />
           <div className="mb-3 flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">
             <h3 className="text-lg font-bold">
               Data Structures & OOP in C++
@@ -872,7 +875,7 @@ export default function Home() {
       <motion.section className="mx-auto max-w-6xl px-4 py-12 sm:py-16 md:px-8 md:py-20" style={{ perspective: 1000 }} variants={sectionReveal} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.15 }}>
         <SectionHeading icon={Trophy} title="Achievements" />
         <motion.div
-          className="rounded-2xl border border-[#1e293b] bg-[#0f172a]/80 backdrop-blur-sm p-6 md:p-8 cursor-pointer transition-all duration-300 hover:border-yellow-500/45 hover:shadow-lg hover:shadow-yellow-500/8"
+          className="group relative rounded-2xl border border-[#1e293b] bg-[#0f172a]/80 p-6 backdrop-blur-sm cursor-pointer transition-all duration-300 hover:border-yellow-500/45 hover:shadow-lg hover:shadow-yellow-500/8 md:p-8"
           variants={fadeUp}
           initial="hidden"
           whileInView="visible"
@@ -881,6 +884,7 @@ export default function Home() {
           viewport={{ once: true }}
           custom={0}
         >
+          <div className="pointer-events-none absolute -inset-2 -z-10 rounded-[1.15rem] bg-yellow-400/20 opacity-0 blur-2xl transition-opacity duration-300 group-hover:opacity-30" />
           <div className="flex items-start gap-3">
             <div className="mt-1 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-yellow-500/10">
               <Trophy className="h-4 w-4 text-yellow-500" />
@@ -921,12 +925,13 @@ export default function Home() {
           {education.map((e, i) => (
             <motion.div
               key={e.institution}
-              className="relative rounded-2xl border border-[#1e293b] bg-[#0f172a]/80 backdrop-blur-sm p-5 transition-all duration-300 hover:border-[#0ea5e9]/45 hover:shadow-lg hover:shadow-[#0ea5e9]/8 sm:p-6 cursor-pointer"
+              className="group relative rounded-2xl border border-[#1e293b] bg-[#0f172a]/80 p-5 backdrop-blur-sm transition-all duration-300 hover:border-[#0ea5e9]/45 hover:shadow-lg hover:shadow-[#0ea5e9]/8 sm:p-6 cursor-pointer"
               variants={scaleIn}
               whileHover={{ y: -4, scale: 1.01 }}
               whileTap={{ scale: 0.99 }}
               transition={{ duration: 0.25, ease: "easeOut" }}
             >
+              <div className="pointer-events-none absolute -inset-2 -z-10 rounded-[1.15rem] bg-cyan-400/20 opacity-0 blur-2xl transition-opacity duration-300 group-hover:opacity-30" />
               <div className="mb-1 flex items-center gap-3">
                 <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-[#0ea5e9]/10">
                   <GraduationCap className="h-4 w-4 text-[#0ea5e9]" />
@@ -953,13 +958,14 @@ export default function Home() {
       {/* ── BOOK A MEETING ── */}
       <motion.section id="contact" className="mx-auto max-w-6xl px-4 py-12 sm:py-16 md:px-8 md:py-20" variants={sectionReveal} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.15 }}>
         <motion.div
-          className="rounded-3xl border border-[#1e293b] bg-gradient-to-b from-[#0f172a]/80 to-[#020617]/80 p-6 text-center shadow-[0_20px_80px_rgba(2,6,23,0.45)] backdrop-blur-sm md:p-10"
+          className="group relative rounded-3xl border border-[#1e293b] bg-gradient-to-b from-[#0f172a]/80 to-[#020617]/80 p-6 text-center shadow-[0_20px_80px_rgba(2,6,23,0.45)] backdrop-blur-sm md:p-10"
           variants={fadeUp}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
           custom={0}
         >
+          <div className="pointer-events-none absolute -inset-3 -z-10 rounded-[1.7rem] bg-cyan-400/20 opacity-0 blur-3xl transition-opacity duration-300 group-hover:opacity-30" />
           <p className="mx-auto mb-5 inline-flex items-center rounded-full border border-[#334155] bg-[#0b1220] px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-200">
             Book a Meeting
           </p>
