@@ -309,26 +309,31 @@ export default function Home() {
         "Computational Theory: Language Principle & Finite Automata Theory",
       issuer: "Infosys",
       date: "Aug 2025",
+      link: "https://drive.google.com/file/d/1bL0mvTgzwHFFrKIeqGDVihf7sGeJF_aX/view?usp=drive_link",
     },
     {
       title: "Generative AI Apps and Solutions with No-Code Tools",
       issuer: "Infosys",
       date: "Aug 2025",
+      link: "https://drive.google.com/file/d/1Ayph3kjwdcrFVC_SvJmwFH0yEeYLMdFq/view?usp=sharing",
     },
     {
       title: "Java Programming",
       issuer: "iamneo",
       date: "May 2025",
+      link: "https://drive.google.com/file/d/1e2Jd4eC_ldedw3KRpda05I87QDbyEk5x/view?usp=sharing",
     },
     {
       title: "Object Oriented Programming",
       issuer: "iamneo",
       date: "Dec 2024",
+      link: "https://drive.google.com/file/d/1CmHkCmBUb-PC_PKJ9NWyAQu-WONuwXy1/view?usp=sharing",
     },
     {
       title: "The Bits and Bytes of Computer Networking",
       issuer: "Google (Coursera)",
       date: "Sep 2024",
+      link: "https://drive.google.com/file/d/1lTln3VV6xwKQ5et_gZxryp6aF-NYNHBS/view?usp=sharing",
     },
   ];
 
@@ -540,7 +545,7 @@ export default function Home() {
             </h1>
 
             <motion.p
-              className="mx-auto mt-5 max-w-2xl text-sm leading-relaxed text-slate-300 sm:text-base md:mx-0 md:text-lg"
+              className="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-slate-300 sm:text-lg md:mx-0 md:text-xl"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.7, delay: 0.2 }}
@@ -615,7 +620,7 @@ export default function Home() {
           custom={1}
         >
           <div className="pointer-events-none absolute -inset-3 -z-10 rounded-[1.4rem] bg-cyan-400/20 opacity-0 blur-2xl transition-opacity duration-300 group-hover:opacity-50" />
-          <p className="leading-relaxed text-[#aaa] md:text-lg">
+          <p className="text-base leading-relaxed text-[#aaa] md:text-lg">
             I'm an MVP builder and full-stack developer, turning ideas into
             end-to-end, production-ready products using a modern tech stack. As
             a B.Tech Computer Science student at Lovely Professional
@@ -638,7 +643,7 @@ export default function Home() {
           viewport={{ once: true, amount: 0.2 }}
           custom={0}
         >
-          <p className="text-sm text-[#9fb0c8]">
+          <p className="text-base text-[#9fb0c8] md:text-lg">
             Tools, languages, and frameworks I use to build production-ready systems.
           </p>
 
@@ -735,7 +740,7 @@ export default function Home() {
                   ))}
                 </div>
 
-                <div className="space-y-3 text-sm leading-relaxed text-[#aab4c3]">
+                <div className="space-y-3 text-base leading-relaxed text-[#aab4c3] md:text-[17px]">
                   <p>
                     <span className="font-semibold text-[#e2e8f0]">Problem:</span> {p.problem}
                   </p>
@@ -800,17 +805,17 @@ export default function Home() {
               Jun – Jul 2025
             </span>
           </div>
-          <p className="mb-4 text-sm text-[#0ea5e9]">
+          <p className="mb-4 text-base text-[#0ea5e9] md:text-lg">
             Lovely Professional University
           </p>
           <ul className="space-y-2">
-            <li className="flex items-start gap-2 text-sm leading-relaxed text-[#aaa]">
+            <li className="flex items-start gap-2 text-base leading-relaxed text-[#aaa] md:text-[17px]">
               <ChevronRight className="mt-0.5 h-4 w-4 shrink-0 text-[#0ea5e9]" />
               Completed a certified 40-hour training program covering core Data
               Structures (Arrays, Linked Lists, Stacks, Queues, BST, Graphs)
               and Object-Oriented Programming concepts in C++.
             </li>
-            <li className="flex items-start gap-2 text-sm leading-relaxed text-[#aaa]">
+            <li className="flex items-start gap-2 text-base leading-relaxed text-[#aaa] md:text-[17px]">
               <ChevronRight className="mt-0.5 h-4 w-4 shrink-0 text-[#0ea5e9]" />
               Gained hands-on experience through projects like Banking
               Management System, File Encryption Tool, and Stock Prediction
@@ -838,23 +843,27 @@ export default function Home() {
           whileInView="visible"
           viewport={{ once: true, amount: 0.2 }}
         >
-          {certificates.map((c, index) => (
-            <motion.div
+          {certificates.map((c) => (
+            <motion.a
               key={c.title}
-              className="rounded-2xl border border-[#1e293b] bg-[#0f172a]/80 backdrop-blur-sm p-5 transition-all duration-300 hover:border-[#0ea5e9]/45 hover:shadow-lg hover:shadow-[#0ea5e9]/8 cursor-pointer"
+              href={c.link}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group relative rounded-2xl border border-[#1e293b] bg-[#0f172a]/80 p-5 backdrop-blur-sm transition-all duration-300 hover:border-[#0ea5e9]/45 hover:shadow-lg hover:shadow-[#0ea5e9]/8 cursor-pointer"
               variants={scaleIn}
               whileHover={{ y: -4, scale: 1.01 }}
               whileTap={{ scale: 0.99 }}
               transition={{ duration: 0.25, ease: "easeOut" }}
             >
+              <div className="pointer-events-none absolute -inset-2 -z-10 rounded-[1.15rem] bg-cyan-400/20 opacity-0 blur-2xl transition-opacity duration-300 group-hover:opacity-30" />
               <Award className="mb-3 h-5 w-5 text-[#0ea5e9]" />
-              <h3 className="mb-1 text-sm font-semibold leading-snug">
+              <h3 className="mb-1 text-base font-semibold leading-snug">
                 {c.title}
               </h3>
-              <p className="text-xs text-[#888]">
+              <p className="text-sm text-[#888]">
                 {c.issuer} &middot; {c.date}
               </p>
-            </motion.div>
+            </motion.a>
           ))}
         </motion.div>
       </motion.section>
@@ -880,7 +889,7 @@ export default function Home() {
               <h3 className="font-semibold">
                 5 Stars in C++ Programming on HackerRank
               </h3>
-              <p className="mt-1 text-sm text-[#888]">
+              <p className="mt-1 text-base text-[#888] md:text-[17px]">
                 Earned through consistent coding challenges.{" "}
                 <span className="text-xs text-[#555]">
                   Oct 2023 – Present
@@ -932,8 +941,8 @@ export default function Home() {
                 </div>
               </div>
               <div className="mt-3 space-y-1 pl-12">
-                <p className="text-sm text-[#ccc]">{e.degree}</p>
-                <p className="text-sm font-semibold text-[#0ea5e9]">{e.score}</p>
+                <p className="text-base text-[#ccc] md:text-[17px]">{e.degree}</p>
+                <p className="text-base font-semibold text-[#0ea5e9] md:text-[17px]">{e.score}</p>
                 <p className="text-xs text-[#666]">{e.location}</p>
               </div>
             </motion.div>
@@ -955,7 +964,7 @@ export default function Home() {
             Book a Meeting
           </p>
           <h3 className="mb-4 text-3xl font-bold text-slate-100 md:text-5xl">Let's Talk</h3>
-          <p className="mx-auto mb-8 max-w-2xl text-[#94a3b8] md:text-lg">
+          <p className="mx-auto mb-8 max-w-2xl text-base text-[#94a3b8] md:text-lg">
             Want to discuss a project, collaboration, or just say hi? Pick a time that works best for you below.
           </p>
 
